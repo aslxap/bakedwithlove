@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Baked with Love by Jessie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #FCE4F1;
+    --bg-alt: #F9CBE3;
+    --paper: #FFF4FA;
+    --ink: #3B2417;
+    --ink-soft: #7A5843;
+    --accent: #E0218A;
+    --accent-soft: #F262AC;
+    --line: #F0AFD3;
+    --olive: #8B5E3C;
+    --olive-soft: #A9805F;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Work Sans',sans-serif;line-height:1.5;}
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:600;margin:0;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  a{color:var(--accent);}
+  button{font-family:'Work Sans',sans-serif;cursor:pointer;border:none;}
+  input,textarea,select{font-family:'Work Sans',sans-serif;}
+  .btn{
+    background:var(--accent);color:var(--paper);padding:12px 22px;border-radius:2px;
+    font-size:15px;font-weight:600;letter-spacing:.02em;transition:transform .12s ease, background .15s ease;
+  }
+  .btn:hover{background:var(--ink);}
+  .btn:active{transform:scale(.98);}
+  .btn:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, button:focus-visible{
+    outline:2px solid var(--accent);outline-offset:2px;
+  }
+  .btn-ghost{
+    background:transparent;color:var(--ink);border:1px solid var(--line);padding:10px 18px;border-radius:2px;font-size:14px;
+  }
+  .btn-ghost:hover{border-color:var(--ink);}
+  .btn-sm{padding:6px 12px;font-size:13px;border-radius:2px;}
+  .wrap{max-width:760px;margin:0 auto;padding:0 24px;}
+  header.site{
+    padding:20px 0;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:20;
+  }
+  header.site .row{display:flex;align-items:center;justify-content:space-between;}
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand h1{font-size:22px;}
+  .cart-pill{
+    display:flex;align-items:center;gap:8px;background:var(--paper);border:1px solid var(--line);
+    padding:8px 14px;border-radius:20px;font-size:14px;font-weight:500;
+  }
+  .scoring{stroke:var(--accent);stroke-width:2;fill:none;stroke-linecap:round;}
+  .hero{padding:56px 0 40px;position:relative;}
+  .hero .eyebrow{
+    font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:14px;
+  }
+  .hero h2{font-size:42px;line-height:1.08;max-width:520px;}
+  .hero p.tag{margin-top:16px;max-width:480px;color:var(--ink-soft);font-size:16px;}
+  .hero-actions{margin-top:28px;display:flex;gap:12px;flex-wrap:wrap;}
+  .divider{margin:8px 0 36px;}
+  section{padding:8px 0 44px;}
+  .section-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px;}
+  .section-head h3{font-size:24px;}
+  .empty{
+    border:1px dashed var(--line);padding:32px;text-align:center;color:var(--ink-soft);border-radius:2px;background:var(--paper);
+  }
+  .menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;}
+  .category-tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
+  .category-tab{
+    padding:7px 16px;border:1px solid var(--line);border-radius:20px;font-size:13.5px;background:var(--paper);color:var(--ink-soft);
+  }
+  .category-tab.active{background:var(--accent);color:var(--paper);border-color:var(--accent);}
+  .item-img{width:100%;height:140px;object-fit:cover;border-radius:2px;background:var(--bg-alt);}
+  .menu-thumb{width:48px;height:48px;object-fit:cover;border-radius:2px;flex-shrink:0;background:var(--bg-alt);}
+  .item-card{
+    background:var(--paper);border:1px solid var(--line);border-radius:2px;padding:18px;display:flex;flex-direction:column;gap:10px;
+  }
+  .item-card h4{font-family:'Fraunces',serif;font-size:18px;font-weight:600;}
+  .item-card p{font-size:13.5px;color:var(--ink-soft);margin:0;flex:1;}
+  .item-price{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:600;color:var(--accent);}
+  .item-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+  .qty-row{display:flex;align-items:center;gap:8px;}
+  .qty-row button{
+    width:26px;height:26px;border:1px solid var(--line);background:var(--bg);border-radius:2px;font-size:15px;line-height:1;
+  }
+  .qty-row span{min-width:18px;text-align:center;font-family:'JetBrains Mono',monospace;}
+  footer.site{border-top:1px solid var(--line);padding:28px 0 60px;color:var(--ink-soft);font-size:13.5px;}
+  footer.site .owner-link{margin-top:14px;display:inline-block;font-size:12.5px;color:var(--ink-soft);text-decoration:underline;}
+
+  .sticky-cart{
+    position:sticky;bottom:0;left:0;right:0;background:var(--ink);color:var(--paper);z-index:30;
+    display:none;
+  }
+  .sticky-cart.show{display:block;}
+  .sticky-cart .row{
+    max-width:760px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:14px;
+  }
+  .sticky-cart .total{font-family:'JetBrains Mono',monospace;font-size:15px;}
+  .sticky-cart button{background:var(--paper);color:var(--ink);padding:10px 20px;border-radius:2px;font-weight:600;font-size:14px;}
+
+  .ticket{
+    background:var(--paper);border:1px solid var(--line);border-radius:2px;padding:26px 24px;position:relative;
+  }
+  .ticket::before, .ticket::after{
+    content:"";position:absolute;top:-1px;bottom:-1px;width:16px;
+  }
+  .ticket-row{display:flex;justify-content:space-between;font-size:14.5px;padding:8px 0;border-bottom:1px dashed var(--line);}
+  .ticket-row:last-child{border-bottom:none;}
+  .ticket-total{display:flex;justify-content:space-between;font-size:18px;font-weight:600;padding-top:14px;margin-top:6px;border-top:1px solid var(--ink);font-family:'JetBrains Mono',monospace;}
+
+  form.stack{display:flex;flex-direction:column;gap:16px;margin-top:24px;}
+  .field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--ink-soft);}
+  .field input, .field textarea, .field select{
+    width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:2px;background:var(--paper);font-size:15px;color:var(--ink);
+  }
+  .field textarea{resize:vertical;min-height:70px;}
+
+  .confirm-wrap{padding:60px 0;}
+  .confirm-badge{
+    font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.06em;color:var(--olive);text-transform:uppercase;margin-bottom:10px;
+  }
+  .order-no{font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:600;margin:6px 0 24px;}
+  .pay-box{
+    background:var(--bg-alt);border:1px solid var(--line);padding:18px 20px;border-radius:2px;margin-top:20px;
+  }
+  .pay-box h4{font-size:15px;margin-bottom:10px;}
+  .pay-line{display:flex;justify-content:space-between;font-size:14.5px;padding:5px 0;}
+
+  .modal-bg{
+    position:fixed;inset:0;background:rgba(44,24,16,.5);display:flex;align-items:center;justify-content:center;z-index:100;padding:20px;
+  }
+  .modal{
+    background:var(--paper);border-radius:2px;padding:30px;max-width:380px;width:100%;
+  }
+  .modal h3{margin-bottom:6px;}
+  .modal p{color:var(--ink-soft);font-size:14px;margin:0 0 18px;}
+  .modal-actions{display:flex;gap:10px;margin-top:18px;justify-content:flex-end;}
+
+  .owner-header{
+    padding:18px 0;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:20;
+  }
+  .owner-nav{display:flex;gap:6px;margin-top:14px;flex-wrap:wrap;}
+  .owner-tab{
+    padding:8px 16px;border:1px solid var(--line);border-radius:2px;font-size:14px;background:transparent;color:var(--ink-soft);
+  }
+  .owner-tab.active{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+  .order-card{
+    background:var(--paper);border:1px solid var(--line);border-radius:2px;padding:16px 18px;margin-bottom:12px;
+  }
+  .order-card .top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;}
+  .order-card .oid{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:14px;}
+  .status-badge{
+    font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:12px;text-transform:uppercase;letter-spacing:.03em;
+  }
+  .status-new{background:#FBD9EC;color:var(--accent);}
+  .status-paid{background:#EAD9C8;color:var(--olive);}
+  .status-ready{background:#F5C9E3;color:#8B3466;}
+  .status-completed{background:#EFDCC9;color:var(--ink-soft);}
+  .order-items{font-size:13.5px;color:var(--ink-soft);margin:8px 0;}
+  .order-foot{display:flex;justify-content:space-between;align-items:center;margin-top:10px;flex-wrap:wrap;gap:8px;}
+  .menu-manage-row{
+    background:var(--paper);border:1px solid var(--line);border-radius:2px;padding:14px 16px;margin-bottom:10px;
+    display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+  }
+  .settings-form{max-width:480px;}
+  .toast{
+    position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--paper);
+    padding:12px 22px;border-radius:2px;font-size:14px;z-index:200;opacity:0;transition:opacity .25s ease;pointer-events:none;
+  }
+  .toast.show{opacity:1;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+  @media (max-width:480px){
+    .hero h2{font-size:32px;}
+  }
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+<div id="toast" class="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+let settings = null;
+let menu = [];
+let categories = [];
+let orders = [];
+let cart = {};
+let view = 'storefront';
+let ownerTab = 'orders';
+let lastOrder = null;
+let selectedCategory = 'All';
+
+const defaultSettings = {
+  businessName: "Baked with Love by Jessie",
+  tagline: "Home-baked breads, cakes, and treats, made in small batches and ready when you are.",
+  pickupAddress: "Set your pickup address in Settings",
+  pickupHours: "Set your pickup hours in Settings",
+  paynow: "",
+  pin: "0000"
+};
+
+const defaultMenu = [
+  { id: id_(), name: "Chocolate & Walnut", description: "", price: 15, available: true, category: "Sourdough", image: null },
+  { id: id_(), name: "Jalapeño & Cheese", description: "", price: 15, available: true, category: "Sourdough", image: null },
+  { id: id_(), name: "Black Sesame", description: "", price: 15, available: true, category: "Sourdough", image: null }
+];
+
+const defaultCategories = [
+  { id: id_(), name: "Sourdough", active: true }
+];
+
+function id_(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+
+// ====== FIREBASE SETUP ======
+// 1. Go to https://console.firebase.google.com, create a free project.
+// 2. In the project, go to Build > Firestore Database > Create database (start in test mode is fine to begin).
+// 3. Go to Project settings (gear icon) > General > "Your apps" > click the </> (web) icon to register a web app.
+// 4. Copy the firebaseConfig object it gives you and paste it below, replacing the placeholder.
+const firebaseConfig = {
+  apiKey: "AIzaSyC-UQ3bEtdCfkMRU4wJ5Rr-QY_j1rpLWnk",
+  authDomain: "bakedwithlove-9fd2e.firebaseapp.com",
+  projectId: "bakedwithlove-9fd2e",
+  storageBucket: "bakedwithlove-9fd2e.firebasestorage.app",
+  messagingSenderId: "1041185789039",
+  appId: "1:1041185789039:web:d673b0378c666a5bdaa99a"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+async function getOrDefault(key, def, shared){
+  try{
+    const doc = await db.collection('bakery_data').doc(key).get();
+    return doc.exists ? doc.data().value : def;
+  }catch(e){
+    console.error('getOrDefault failed for', key, e);
+    return def;
+  }
+}
+async function saveKey(key, val, shared){
+  try{
+    await db.collection('bakery_data').doc(key).set({ value: val });
+  }catch(e){
+    console.error('saveKey failed for', key, e);
+    showToast("Could not save — check your connection or Firebase setup.");
+  }
+}
+
+async function boot(){
+  settings = await getOrDefault('settings', defaultSettings, true);
+  menu = await getOrDefault('menu', defaultMenu, true);
+  categories = await getOrDefault('categories', defaultCategories, true);
+  orders = await getOrDefault('orders', [], true);
+  if(menu.length === 0) menu = defaultMenu;
+  if(categories.length === 0) categories = defaultCategories;
+  render();
+}
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2200);
+}
+
+function scoringSVG(w, h, opacity){
+  let lines = '';
+  const n = Math.floor(w/26);
+  for(let i=0;i<n;i++){
+    const x = i*26 + 6;
+    lines += `<line class="scoring" x1="${x}" y1="${h}" x2="${x+16}" y2="0" opacity="${opacity}"/>`;
+  }
+  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" aria-hidden="true">${lines}</svg>`;
+}
+
+function cartCount(){
+  return Object.values(cart).reduce((a,b)=>a+b,0);
+}
+function cartTotal(){
+  let t = 0;
+  for(const id in cart){
+    const item = menu.find(m=>m.id===id);
+    if(item) t += item.price * cart[id];
+  }
+  return t;
+}
+function money(n){
+  return '$' + n.toFixed(2);
+}
+
+function crc16ccitt(str){
+  let crc = 0xFFFF;
+  for(let i=0;i<str.length;i++){
+    crc ^= (str.charCodeAt(i) << 8);
+    for(let b=0;b<8;b++){
+      crc = (crc & 0x8000) ? ((crc << 1) ^ 0x1021) : (crc << 1);
+      crc &= 0xFFFF;
+    }
+  }
+  return crc.toString(16).toUpperCase().padStart(4,'0');
+}
+
+function tlv(id, value){
+  return id + String(value).length.toString().padStart(2,'0') + value;
+}
+
+function normalizePayNowProxy(raw){
+  const v = String(raw||'').replace(/[\s-]/g,'');
+  if(/^\+65\d{8}$/.test(v)) return { type:'0', value:v };
+  if(/^65\d{8}$/.test(v)) return { type:'0', value:'+'+v };
+  if(/^\d{8}$/.test(v)) return { type:'0', value:'+65'+v };
+  if(/^\+\d{8,15}$/.test(v)) return { type:'0', value:v };
+  return { type:'2', value:v.toUpperCase() };
+}
+
+function buildPayNowPayload(proxy, amount, merchantName, billRef){
+  let mai = '';
+  mai += tlv('00','SG.PAYNOW');
+  mai += tlv('01', proxy.type);
+  mai += tlv('02', proxy.value);
+  mai += tlv('03', '0');
+
+  let payload = '';
+  payload += tlv('00','01');
+  payload += tlv('01','12');
+  payload += tlv('26', mai);
+  payload += tlv('52','0000');
+  payload += tlv('53','702');
+  payload += tlv('54', amount.toFixed(2));
+  payload += tlv('58','SG');
+  payload += tlv('59', (merchantName||'NA').slice(0,25));
+  payload += tlv('60','Singapore');
+  if(billRef){
+    payload += tlv('62', tlv('01', billRef.slice(0,25)));
+  }
+  payload += '6304';
+  payload += crc16ccitt(payload);
+  return payload;
+}
+
+function generatePayNowQR(order){
+  const canvas = document.getElementById('payqr');
+  if(!canvas) return;
+  if(!settings.paynow){
+    return;
+  }
+  const proxy = normalizePayNowProxy(settings.paynow);
+  const payload = buildPayNowPayload(proxy, order.total, settings.businessName, order.id);
+  if(window.QRCode){
+    window.QRCode.toCanvas(canvas, payload, { width:200, margin:1, color:{ dark:'#3B2417', light:'#FFF4FA' } }, function(err){
+      if(err) console.error(err);
+    });
+  }
+}
+
+function render(){
+  const app = document.getElementById('app');
+  if(view === 'storefront') app.innerHTML = renderStorefront();
+  else if(view === 'checkout') app.innerHTML = renderCheckout();
+  else if(view === 'confirmation'){
+    app.innerHTML = renderConfirmation();
+    generatePayNowQR(lastOrder);
+  }
+  else if(view === 'owner-login') app.innerHTML = renderOwnerLogin();
+  else if(view === 'owner') app.innerHTML = renderOwner();
+}
+
+function renderStorefront(){
+  const activeCatNames = categories.filter(c => c.active).map(c => c.name);
+  const available = menu.filter(m => m.available && activeCatNames.includes(m.category));
+  const cats = categories.filter(c => c.active && available.some(m => m.category === c.name)).map(c => c.name);
+  if(selectedCategory !== 'All' && !cats.includes(selectedCategory)) selectedCategory = 'All';
+  const items = selectedCategory === 'All' ? available : available.filter(m => m.category === selectedCategory);
+  return `
+    <header class="site">
+      <div class="wrap row">
+        <div class="brand">
+          ${scoringSVG(34,34,1)}
+          <h1>${escapeHtml(settings.businessName)}</h1>
+        </div>
+        ${cartCount()>0 ? `<div class="cart-pill">${cartCount()} in basket · ${money(cartTotal())}</div>` : ''}
+      </div>
+    </header>
+
+    <div class="wrap">
+      <section class="hero">
+        <div class="eyebrow">Baked fresh · ${todayStr()}</div>
+        <h2>Home-baked treats.</h2>
+        <div class="hero-actions">
+          <button class="btn" onclick="scrollToMenu()">View today's menu</button>
+        </div>
+        <div class="divider">${scoringSVG(760,20,0.35)}</div>
+      </section>
+
+      <section id="menu-section">
+        <div class="section-head"><h3>From the kitchen</h3></div>
+        ${cats.length > 0 ? `
+        <div class="category-tabs">
+          <button class="category-tab ${selectedCategory==='All'?'active':''}" onclick="setCategory('All')">All</button>
+          ${cats.map(c => `<button class="category-tab ${selectedCategory===c?'active':''}" onclick="setCategory('${jsAttr(c)}')">${escapeHtml(c)}</button>`).join('')}
+        </div>` : ''}
+        ${items.length === 0 ? `<div class="empty">Nothing on the menu right now — check back soon.</div>` : `
+        <div class="menu-grid">
+          ${items.map(m => `
+            <div class="item-card">
+              ${m.image ? `<img class="item-img" src="${m.image}" alt="${escapeAttr(m.name)}">` : ''}
+              <h4>${escapeHtml(m.name)}</h4>
+              <p>${escapeHtml(m.description || '')}</p>
+              <div class="item-foot">
+                <span class="item-price">${money(m.price)}</span>
+                <div class="qty-row">
+                  <button aria-label="Remove one ${escapeAttr(m.name)}" onclick="changeQty('${m.id}',-1)">−</button>
+                  <span>${cart[m.id]||0}</span>
+                  <button aria-label="Add one ${escapeAttr(m.name)}" onclick="changeQty('${m.id}',1)">+</button>
+                </div>
+              </div>
+            </div>
+          `).join('')}
+        </div>`}
+      </section>
+
+      <section>
+        <div class="section-head"><h3>Pickup</h3></div>
+        <p style="color:var(--ink-soft);font-size:14.5px;max-width:480px;">
+          ${escapeHtml(settings.pickupAddress)}<br>${escapeHtml(settings.pickupHours)}
+        </p>
+      </section>
+    </div>
+
+    <footer class="site">
+      <div class="wrap">
+        <div>${escapeHtml(settings.businessName)} — home bakery, small batches only.</div>
+        <a class="owner-link" href="#" onclick="goOwnerLogin(event)">Baker login</a>
+      </div>
+    </footer>
+
+    <div class="sticky-cart ${cartCount()>0 ? 'show':''}">
+      <div class="row">
+        <span class="total">${cartCount()} item${cartCount()===1?'':'s'} · ${money(cartTotal())}</span>
+        <button onclick="goCheckout()">Checkout</button>
+      </div>
+    </div>
+  `;
+}
+
+function setCategory(c){
+  selectedCategory = c;
+  render();
+}
+
+function todayStr(){
+  return new Date().toLocaleDateString(undefined, { weekday:'long', month:'long', day:'numeric' });
+}
+
+function scrollToMenu(){
+  const el = document.getElementById('menu-section');
+  if(el) el.scrollIntoView({behavior:'smooth'});
+}
+
+function changeQty(id, delta){
+  const item = menu.find(m=>m.id===id);
+  if(!item) return;
+  const cur = cart[id] || 0;
+  const next = Math.max(0, cur + delta);
+  if(next === 0) delete cart[id]; else cart[id] = next;
+  render();
+}
+
+function goCheckout(){
+  if(cartCount()===0) return;
+  view = 'checkout';
+  render();
+  window.scrollTo(0,0);
+}
+
+function renderCheckout(){
+  const rows = Object.keys(cart).map(id=>{
+    const item = menu.find(m=>m.id===id);
+    if(!item) return '';
+    return `<div class="ticket-row"><span>${cart[id]} × ${escapeHtml(item.name)}</span><span class="mono">${money(item.price*cart[id])}</span></div>`;
+  }).join('');
+
+  return `
+    <header class="site">
+      <div class="wrap row">
+        <div class="brand">${scoringSVG(28,28,1)}<h1 style="font-size:19px;">${escapeHtml(settings.businessName)}</h1></div>
+        <a href="#" onclick="backToMenu(event)" style="font-size:14px;">Back to menu</a>
+      </div>
+    </header>
+    <div class="wrap" style="padding-top:36px;max-width:520px;">
+      <h3 style="font-size:24px;margin-bottom:18px;">Your order</h3>
+      <div class="ticket">
+        ${rows}
+        <div class="ticket-total"><span>Total</span><span>${money(cartTotal())}</span></div>
+      </div>
+
+      <form class="stack" onsubmit="submitOrder(event)">
+        <div class="field">
+          <label for="cname">Name</label>
+          <input id="cname" required placeholder="Your name">
+        </div>
+        <div class="field">
+          <label for="cphone">Phone number</label>
+          <input id="cphone" required placeholder="For pickup coordination">
+        </div>
+        <div class="field">
+          <label for="cdate">Preferred pickup date</label>
+          <input id="cdate" type="date" required min="${new Date().toISOString().split('T')[0]}">
+        </div>
+        <div class="field">
+          <label for="cnotes">Notes (optional)</label>
+          <textarea id="cnotes" placeholder="Anything the baker should know"></textarea>
+        </div>
+        <button class="btn" type="submit" style="align-self:flex-start;">Place order</button>
+      </form>
+    </div>
+  `;
+}
+
+function backToMenu(e){
+  e.preventDefault();
+  view = 'storefront';
+  render();
+}
+
+async function submitOrder(e){
+  e.preventDefault();
+  const name = document.getElementById('cname').value.trim();
+  const phone = document.getElementById('cphone').value.trim();
+  const date = document.getElementById('cdate').value;
+  const notes = document.getElementById('cnotes').value.trim();
+  if(!name || !phone || !date) return;
+
+  const items = Object.keys(cart).map(id=>{
+    const item = menu.find(m=>m.id===id);
+    return { id, name: item.name, qty: cart[id], price: item.price };
+  });
+
+  const order = {
+    id: 'SD-' + Date.now().toString(36).toUpperCase().slice(-5),
+    customerName: name,
+    phone,
+    items,
+    total: cartTotal(),
+    pickupDate: date,
+    notes,
+    status: 'new',
+    createdAt: new Date().toISOString()
+  };
+
+  orders = [order, ...orders];
+  await saveKey('orders', orders, true);
+  lastOrder = order;
+  cart = {};
+  view = 'confirmation';
+  render();
+  window.scrollTo(0,0);
+}
+
+function renderConfirmation(){
+  const o = lastOrder;
+  const rows = o.items.map(it=>`<div class="ticket-row"><span>${it.qty} × ${escapeHtml(it.name)}</span><span class="mono">${money(it.price*it.qty)}</span></div>`).join('');
+
+  return `
+    <header class="site">
+      <div class="wrap row">
+        <div class="brand">${scoringSVG(28,28,1)}<h1 style="font-size:19px;">${escapeHtml(settings.businessName)}</h1></div>
+      </div>
+    </header>
+    <div class="wrap confirm-wrap" style="max-width:520px;">
+      <div class="confirm-badge">Order received</div>
+      <div class="order-no">${o.id}</div>
+      <div class="ticket">
+        ${rows}
+        <div class="ticket-total"><span>Total</span><span>${money(o.total)}</span></div>
+      </div>
+      <p style="margin-top:18px;color:var(--ink-soft);font-size:14.5px;">
+        Pickup on ${formatDate(o.pickupDate)}. ${escapeHtml(settings.pickupAddress)}
+      </p>
+      <div class="pay-box">
+        <h4>Scan to pay with PayNow</h4>
+        ${settings.paynow ? `
+          <div style="display:flex;flex-direction:column;align-items:center;gap:10px;padding:6px 0;">
+            <canvas id="payqr" width="200" height="200"></canvas>
+            <div style="font-size:13.5px;color:var(--ink-soft);">Amount is fixed at <span class="mono" style="color:var(--ink);">${money(o.total)}</span> for order ${o.id}</div>
+          </div>
+        ` : '<p style="font-size:13.5px;color:var(--ink-soft);">Payment details coming soon — the baker will follow up.</p>'}
+      </div>
+      <button class="btn" style="margin-top:26px;" onclick="newOrder()">Place another order</button>
+    </div>
+  `;
+}
+
+function formatDate(d){
+  const dt = new Date(d + 'T00:00:00');
+  return dt.toLocaleDateString(undefined, { weekday:'long', month:'long', day:'numeric' });
+}
+
+function newOrder(){
+  view = 'storefront';
+  render();
+}
+
+function goOwnerLogin(e){
+  e.preventDefault();
+  view = 'owner-login';
+  render();
+}
+
+function renderOwnerLogin(){
+  return `
+    <div class="modal-bg">
+      <div class="modal">
+        <h3>Baker login</h3>
+        <p>Enter your PIN to manage orders and the menu.</p>
+        <form onsubmit="checkPin(event)">
+          <div class="field">
+            <label for="pin">PIN</label>
+            <input id="pin" type="password" inputmode="numeric" autofocus placeholder="••••">
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn-ghost" onclick="cancelOwnerLogin()">Cancel</button>
+            <button type="submit" class="btn">Enter</button>
+          </div>
+        </form>
+        <p style="margin-top:14px;font-size:12px;">First time here? The default PIN is <span class="mono">0000</span> — change it in Settings once you're in.</p>
+      </div>
+    </div>
+  `;
+}
+
+function cancelOwnerLogin(){
+  view = 'storefront';
+  render();
+}
+
+function checkPin(e){
+  e.preventDefault();
+  const val = document.getElementById('pin').value;
+  if(val === settings.pin){
+    view = 'owner';
+    ownerTab = 'orders';
+    render();
+  }else{
+    showToast("That PIN doesn't match.");
+  }
+}
+
+function renderOwner(){
+  return `
+    <div class="owner-header">
+      <div class="wrap">
+        <div class="row">
+          <div class="brand">${scoringSVG(26,26,1)}<h1 style="font-size:19px;">Baker dashboard</h1></div>
+          <button class="btn-ghost btn-sm" onclick="logoutOwner()">Log out</button>
+        </div>
+        <div class="owner-nav">
+          <button class="owner-tab ${ownerTab==='orders'?'active':''}" onclick="setOwnerTab('orders')">Orders</button>
+          <button class="owner-tab ${ownerTab==='menu'?'active':''}" onclick="setOwnerTab('menu')">Menu</button>
+          <button class="owner-tab ${ownerTab==='settings'?'active':''}" onclick="setOwnerTab('settings')">Settings</button>
+        </div>
+      </div>
+    </div>
+    <div class="wrap" style="padding-top:26px;">
+      ${ownerTab==='orders' ? renderOwnerOrders() : ownerTab==='menu' ? renderOwnerMenu() : renderOwnerSettings()}
+    </div>
+  `;
+}
+
+function setOwnerTab(t){
+  ownerTab = t;
+  render();
+}
+
+function logoutOwner(){
+  view = 'storefront';
+  render();
+}
+
+function renderOwnerOrders(){
+  if(orders.length===0) return `<div class="empty">No orders yet. New orders will show up here.</div>`;
+  const sorted = [...orders].sort((a,b)=> new Date(a.pickupDate) - new Date(b.pickupDate));
+  return sorted.map(o => `
+    <div class="order-card">
+      <div class="top">
+        <div>
+          <div class="oid">${o.id}</div>
+          <div style="font-size:14px;margin-top:2px;">${escapeHtml(o.customerName)} · ${escapeHtml(o.phone)}</div>
+        </div>
+        <span class="status-badge status-${o.status}">${o.status}</span>
+      </div>
+      <div class="order-items">${o.items.map(it=>`${it.qty} × ${escapeHtml(it.name)}`).join(', ')}</div>
+      ${o.notes ? `<div style="font-size:13px;color:var(--ink-soft);font-style:italic;">"${escapeHtml(o.notes)}"</div>` : ''}
+      <div class="order-foot">
+        <span style="font-size:13.5px;color:var(--ink-soft);">Pickup ${formatDate(o.pickupDate)} · <span class="mono">${money(o.total)}</span></span>
+        <select onchange="updateStatus('${o.id}', this.value)" style="padding:6px 10px;border:1px solid var(--line);border-radius:2px;font-size:13px;">
+          <option value="new" ${o.status==='new'?'selected':''}>New</option>
+          <option value="paid" ${o.status==='paid'?'selected':''}>Paid</option>
+          <option value="ready" ${o.status==='ready'?'selected':''}>Ready for pickup</option>
+          <option value="completed" ${o.status==='completed'?'selected':''}>Completed</option>
+        </select>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function updateStatus(id, status){
+  const o = orders.find(x=>x.id===id);
+  if(!o) return;
+  o.status = status;
+  await saveKey('orders', orders, true);
+  showToast("Order updated.");
+  render();
+}
+
+function renderOwnerMenu(){
+  return `
+    <div class="section-head"><h3 style="font-size:20px;">Tabs</h3></div>
+    <p style="font-size:13.5px;color:var(--ink-soft);margin:-8px 0 14px;">Open a tab when a bake is in season, close it when it's not. Closed tabs and their items stay hidden from customers but aren't deleted.</p>
+    ${categories.length===0 ? `<div class="empty">No tabs yet — add one below.</div>` : categories.map(c => `
+      <div class="menu-manage-row">
+        <div style="font-weight:600;">${escapeHtml(c.name)}</div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-soft);">
+            <input type="checkbox" ${c.active?'checked':''} onchange="toggleCategoryActive('${c.id}')"> Open
+          </label>
+          <button class="btn-ghost btn-sm" onclick="deleteCategory('${c.id}')">Remove</button>
+        </div>
+      </div>
+    `).join('')}
+    <form onsubmit="addCategory(event)" style="display:flex;gap:10px;margin-top:14px;align-items:flex-end;flex-wrap:wrap;">
+      <div class="field" style="flex:1;min-width:180px;margin:0;"><label for="newcat">New tab name</label><input id="newcat" placeholder="e.g. Christmas Bakes"></div>
+      <button class="btn-ghost" type="submit">Add tab</button>
+    </form>
+
+    <div class="section-head" style="margin-top:36px;"><h3 style="font-size:20px;">Menu items</h3></div>
+    ${menu.length===0 ? `<div class="empty">No items yet — add your first below.</div>` : menu.map(m=>`
+      <div class="menu-manage-row">
+        <div style="display:flex;gap:12px;align-items:center;">
+          ${m.image ? `<img class="menu-thumb" src="${m.image}" alt="">` : ''}
+          <div>
+            <div style="font-weight:600;">${escapeHtml(m.name)} <span class="mono" style="color:var(--accent);font-weight:500;">${money(m.price)}</span></div>
+            <div style="font-size:13px;color:var(--ink-soft);">${escapeHtml(m.category || 'Uncategorized')}${m.description ? ' · ' + escapeHtml(m.description) : ''}</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-soft);">
+            <input type="checkbox" ${m.available?'checked':''} onchange="toggleAvailable('${m.id}')"> Available
+          </label>
+          <button class="btn-ghost btn-sm" onclick="deleteItem('${m.id}')">Remove</button>
+        </div>
+      </div>
+    `).join('')}
+
+    <div class="ticket" style="margin-top:22px;">
+      <h4 style="margin-bottom:14px;">Add a menu item</h4>
+      ${categories.length===0 ? `<p style="font-size:13.5px;color:var(--ink-soft);">Add a tab above first, then you can add items to it.</p>` : `
+      <form class="stack" onsubmit="addItem(event)" style="margin-top:0;">
+        <div class="field"><label for="iname">Name</label><input id="iname" required placeholder="e.g. Fig and walnut loaf"></div>
+        <div class="field"><label for="idesc">Description</label><input id="idesc" placeholder="A short line about it"></div>
+        <div class="field"><label for="icat">Tab</label>
+          <select id="icat">${categories.map(c=>`<option value="${escapeAttr(c.name)}">${escapeHtml(c.name)}</option>`).join('')}</select>
+        </div>
+        <div class="field"><label for="iprice">Price (USD)</label><input id="iprice" type="number" min="0" step="0.5" required placeholder="10"></div>
+        <div class="field"><label for="iimage">Photo (optional)</label><input id="iimage" type="file" accept="image/*"></div>
+        <button class="btn" type="submit" style="align-self:flex-start;">Add item</button>
+      </form>`}
+    </div>
+  `;
+}
+
+async function addCategory(e){
+  e.preventDefault();
+  const input = document.getElementById('newcat');
+  const name = input.value.trim();
+  if(!name) return;
+  if(categories.some(c => c.name.toLowerCase() === name.toLowerCase())){
+    showToast("You already have a tab with that name.");
+    return;
+  }
+  categories = [...categories, { id: id_(), name, active: true }];
+  await saveKey('categories', categories, true);
+  showToast("Tab added.");
+  render();
+}
+
+async function toggleCategoryActive(id){
+  const c = categories.find(x => x.id === id);
+  if(!c) return;
+  c.active = !c.active;
+  await saveKey('categories', categories, true);
+  showToast(c.active ? "Tab is open to customers." : "Tab is closed to customers.");
+  render();
+}
+
+async function deleteCategory(id){
+  const c = categories.find(x => x.id === id);
+  if(!c) return;
+  if(menu.some(m => m.category === c.name)){
+    showToast("Move or remove this tab's items before deleting it.");
+    return;
+  }
+  categories = categories.filter(x => x.id !== id);
+  await saveKey('categories', categories, true);
+  showToast("Tab removed.");
+  render();
+}
+
+async function toggleAvailable(id){
+  const m = menu.find(x=>x.id===id);
+  if(!m) return;
+  m.available = !m.available;
+  await saveKey('menu', menu, true);
+  render();
+}
+
+async function deleteItem(id){
+  menu = menu.filter(m=>m.id!==id);
+  await saveKey('menu', menu, true);
+  showToast("Item removed.");
+  render();
+}
+
+function readImageResized(file, maxW){
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = new Image();
+      img.onload = () => {
+        const scale = Math.min(1, maxW / img.width);
+        const w = Math.round(img.width * scale);
+        const h = Math.round(img.height * scale);
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        resolve(canvas.toDataURL('image/jpeg', 0.82));
+      };
+      img.onerror = () => reject(new Error('Could not read image'));
+      img.src = e.target.result;
+    };
+    reader.onerror = () => reject(new Error('Could not read file'));
+    reader.readAsDataURL(file);
+  });
+}
+
+async function addItem(e){
+  e.preventDefault();
+  const name = document.getElementById('iname').value.trim();
+  const description = document.getElementById('idesc').value.trim();
+  const catField = document.getElementById('icat');
+  const category = catField ? catField.value : '';
+  const price = parseFloat(document.getElementById('iprice').value);
+  const fileInput = document.getElementById('iimage');
+  if(!name || isNaN(price) || !category) return;
+
+  let image = null;
+  if(fileInput.files && fileInput.files[0]){
+    try{
+      image = await readImageResized(fileInput.files[0], 600);
+    }catch(err){
+      showToast("Couldn't process that photo — item saved without it.");
+    }
+  }
+
+  menu = [...menu, { id: id_(), name, description, category, price, available: true, image }];
+  await saveKey('menu', menu, true);
+  showToast("Item added.");
+  render();
+}
+
+function renderOwnerSettings(){
+  return `
+    <div class="section-head"><h3 style="font-size:20px;">Business settings</h3></div>
+    <form class="stack settings-form" onsubmit="saveSettings(event)">
+      <div class="field"><label for="sname">Business name</label><input id="sname" value="${escapeAttr(settings.businessName)}" required></div>
+      <div class="field"><label for="stag">Tagline / short description</label><textarea id="stag">${escapeHtml(settings.tagline)}</textarea></div>
+      <div class="field"><label for="saddr">Pickup address</label><input id="saddr" value="${escapeAttr(settings.pickupAddress)}"></div>
+      <div class="field"><label for="shours">Pickup hours</label><input id="shours" value="${escapeAttr(settings.pickupHours)}"></div>
+      <div class="field"><label for="spaynow">PayNow mobile number or UEN</label><input id="spaynow" value="${escapeAttr(settings.paynow)}" placeholder="e.g. 91234567 or a UEN"></div>
+      <div class="field"><label for="spin">Owner PIN</label><input id="spin" value="${escapeAttr(settings.pin)}" required></div>
+      <button class="btn" type="submit" style="align-self:flex-start;">Save settings</button>
+    </form>
+  `;
+}
+
+async function saveSettings(e){
+  e.preventDefault();
+  settings = {
+    businessName: document.getElementById('sname').value.trim() || defaultSettings.businessName,
+    tagline: document.getElementById('stag').value.trim(),
+    pickupAddress: document.getElementById('saddr').value.trim(),
+    pickupHours: document.getElementById('shours').value.trim(),
+    paynow: document.getElementById('spaynow').value.trim(),
+    pin: document.getElementById('spin').value.trim() || '0000'
+  };
+  await saveKey('settings', settings, true);
+  showToast("Settings saved.");
+  render();
+}
+
+function escapeHtml(str){
+  if(str === undefined || str === null) return '';
+  return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function escapeAttr(str){ return escapeHtml(str); }
+function jsAttr(str){
+  return String(str||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'&quot;').replace(/\n/g,' ');
+}
+
+boot();
+</script>
+</body>
+</html>
